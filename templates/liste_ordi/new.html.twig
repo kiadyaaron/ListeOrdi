@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ListeOrdi{% endblock %}
+
+{% block body %}
+
+    {{ include('liste_ordi/_form.html.twig') }}
+
+    <a href="{{ path('app_liste_ordi_index') }}">Retour</a>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ListeOrdi{% endblock %}
+
+{% block body %}
+    <h2><center>LISTE DES ORDINATEURS</center></h2>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <a href="{{ path('app_liste_ordi_new') }}" class="btn btn-success">Ajouter un nouvel ordinateur</a>
+        <form method="get" class="d-flex p-2 border rounded" style="max-width: 400px;" action="{{ path('app_liste_ordi_index') }}">
+    <input type="text" name="q" class="form-control me-2 border-0" value="{{ query|default('') }}" placeholder="Rechercher..." />
+    <button class="btn btn-primary" type="submit">Rechercher</button>
+</form>
+
+    </div>
+    <div>
+    <table class="table table-bordered table-striped table-custom">
+        <thead class="table-dark text-nowrap">
+            <tr>
+                <th>Date premier dotation</th>
+                <th>DA Odoo</th>
+                <th>Prix Unitaire</th>
+                <th>Date Fin d'Amortissement</th>
+                <th>Nombre de Jours Restants</th>
+                <th>Prix d'Amortissement</th>
+                <th>IM</th>
+                <th>Detenteur</th>
+                <th>Fonction</th>
+                <th>Marque</th>
+                <th>NumSerie</th>
+                <th>Options</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for liste_ordi in liste_ordis %}
+            <tr class="text-nowrap">
+                <td>{{ liste_ordi.DateFirstDotation ? liste_ordi.DateFirstDotation|date('d-m-Y') : '' }}</td>
+                <td>{{ liste_ordi.DaOdoo }}</td>
+                <td>{{ liste_ordi.PrixUnitaire }}</td>
+                <td>{{ liste_ordi.DateFinAmort ? liste_ordi.DateFinAmort|date('d-m-Y') : '' }}</td>
+                <td>{{ liste_ordi.NbJoursRestants }}</td>
+                <td>{{ liste_ordi.PrixAmort }}</td>
+                <td>{{ liste_ordi.IM }}</td>
+                <td>{{ liste_ordi.Detenteur }}</td>
+                <td>{{ liste_ordi.Fonction }}</td>
+                <td>{{ liste_ordi.Marque }}</td>
+                <td>{{ liste_ordi.NumSerie }}</td>
+                <td>
+                    <a href="{{ path('app_liste_ordi_edit', {'id': liste_ordi.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+                            <form method="post" action="{{ path('app_liste_ordi_delete', {'id': liste_ordi.id}) }}"
+                                  onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet odrinateur ?');"
+                                  style="display:inline-block">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ liste_ordi.id) }}">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button class="btn btn-danger btn-sm">Supprimer</button>
+                            </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="15">Aucun ordinateur trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

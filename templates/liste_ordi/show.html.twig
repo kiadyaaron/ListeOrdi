@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ListeOrdi{% endblock %}
+
+{% block body %}
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ liste_ordi.id }}</td>
+            </tr>
+            <tr>
+                <th>DateFirstDotation</th>
+                <td>{{ liste_ordi.DateFirstDotation ? liste_ordi.DateFirstDotation|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DaOdoo</th>
+                <td>{{ liste_ordi.DaOdoo }}</td>
+            </tr>
+            <tr>
+                <th>PrixUnitaire</th>
+                <td>{{ liste_ordi.PrixUnitaire }}</td>
+            </tr>
+            <tr>
+                <th>CoutJournalierFixe</th>
+                <td>{{ liste_ordi.CoutJournalierFixe }}</td>
+            </tr>
+            <tr>
+                <th>NbJourFixe</th>
+                <td>{{ liste_ordi.NbJourFixe }}</td>
+            </tr>
+            <tr>
+                <th>DateFinAmort</th>
+                <td>{{ liste_ordi.DateFinAmort ? liste_ordi.DateFinAmort|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>NbJoursRestants</th>
+                <td>{{ liste_ordi.NbJoursRestants }}</td>
+            </tr>
+            <tr>
+                <th>PrixAmort</th>
+                <td>{{ liste_ordi.PrixAmort }}</td>
+            </tr>
+            <tr>
+                <th>IM</th>
+                <td>{{ liste_ordi.IM }}</td>
+            </tr>
+            <tr>
+                <th>Detenteur</th>
+                <td>{{ liste_ordi.Detenteur }}</td>
+            </tr>
+            <tr>
+                <th>Fonction</th>
+                <td>{{ liste_ordi.Fonction }}</td>
+            </tr>
+            <tr>
+                <th>Marque</th>
+                <td>{{ liste_ordi.Marque }}</td>
+            </tr>
+            <tr>
+                <th>NumSerie</th>
+                <td>{{ liste_ordi.NumSerie }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_liste_ordi_index') }}">Retour</a>
+
+    <a href="{{ path('app_liste_ordi_edit', {'id': liste_ordi.id}) }}">Modifier</a>
+
+    {{ include('liste_ordi/_delete_form.html.twig') }}
+{% endblock %}

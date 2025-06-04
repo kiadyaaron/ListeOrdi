@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit ListeOrdi{% endblock %}
+
+{% block body %}
+
+    {{ include('liste_ordi/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_liste_ordi_index') }}">Retour</a>
+
+    {{ include('liste_ordi/_delete_form.html.twig') }}
+{% endblock %}
