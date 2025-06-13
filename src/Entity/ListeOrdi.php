@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ListeOrdiRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: ListeOrdiRepository::class)]
 class ListeOrdi
 {
@@ -82,30 +83,6 @@ class ListeOrdi
     public function getDateFinAmort(): ?\DateTime { return $this->DateFinAmort; }
     public function getNbJoursRestants(): ?int { return $this->NbJoursRestants; }
     public function getPrixAmort(): ?int { return $this->PrixAmort; }
-    public function setNbJourFixe(?int $NbJourFixe): static
-{
-    $this->NbJourFixe = $NbJourFixe;
-    return $this;
-}
-
-public function setDateFinAmort(?\DateTime $DateFinAmort): static
-{
-    $this->DateFinAmort = $DateFinAmort;
-    return $this;
-}
-
-public function setNbJoursRestants(?int $NbJoursRestants): static
-{
-    $this->NbJoursRestants = $NbJoursRestants;
-    return $this;
-}
-
-public function setPrixAmort(?int $PrixAmort): static
-{
-    $this->PrixAmort = $PrixAmort;
-    return $this;
-}
-
 
     public function getIM(): ?string { return $this->IM; }
     public function setIM(string $IM): static { $this->IM = $IM; return $this; }
@@ -122,20 +99,29 @@ public function setPrixAmort(?int $PrixAmort): static
     public function getNumSerie(): ?string { return $this->NumSerie; }
     public function setNumSerie(string $NumSerie): static { $this->NumSerie = $NumSerie; return $this; }
 
-    private function recalculerChamps(): void
+    public function recalculerChamps(): void
     {
         if ($this->PrixUnitaire && $this->CoutJournalierFixe && $this->DateFirstDotation) {
+            // Calcul du nombre de jours d'amortissement
             $this->NbJourFixe = intdiv($this->PrixUnitaire, $this->CoutJournalierFixe);
 
-            $dateFin = clone $this->DateFirstDotation;
-            $dateFin->modify("+{$this->NbJourFixe} days");
-            $this->DateFinAmort = $dateFin;
+            // Date de fin d’amortissement
+            $this->DateFinAmort = (clone $this->DateFirstDotation)->modify("+{$this->NbJourFixe} days");
 
-            $today = new \DateTime();
-            $interval = $today->diff($this->DateFinAmort);
-            $this->NbJoursRestants = max(0, (int) $interval->format('%r%a'));
+            // Date actuelle (système)
+            $today = (new \DateTimeImmutable())->setTime(0, 0);
 
+            // Jours restants
+            $this->NbJoursRestants = max(0, $today->diff($this->DateFinAmort)->days);
+
+            // Prix restant à amortir
             $this->PrixAmort = $this->NbJoursRestants * $this->CoutJournalierFixe;
         }
+    }
+
+    #[ORM\PostLoad]
+    public function updateChampsApresChargement(): void
+    {
+        $this->recalculerChamps();
     }
 }
