@@ -22,11 +22,11 @@
             <div class="container">
                 {% if app.user %}
                     <a class="navbar-brand" href="{{ path('app_liste_ordi_index') }}">
-                        <img src="{{ asset('images/Logo_OTI.jpg') }}" alt="Logo OTI" style="height: 40px;">
+                        <img src="{{ asset('image/Logo_OTI.jpg') }}" alt="Logo OTI" style="height: 40px;">
                     </a>
                 {% else %}
                     <a class="navbar-brand" href="{{ path('app_home') }}">
-                        <img src="{{ asset('images/Logo_OTI.jpg') }}" alt="Logo OTI" style="height: 40px;">
+                        <img src="{{ asset('image/Logo_OTI.jpg') }}" alt="Logo OTI" style="height: 40px;">
                     </a>
                 {% endif %}
             </div>
@@ -40,8 +40,8 @@
                     {% if app.user %}
                         <a href="{{ path('app_logout') }}">Déconnexion</a>
                     {% else %}
-                        <a href="{{ path('app_login') }}">Connexion</a> |
-                        <a href="{{ path('app_register') }}">Inscription</a>
+                        <a href="{{ path('app_login') }}">Connexion </a> |
+                        <a href="{{ path('app_register') }}"> Inscription</a>
                     {% endif %}  
                 </div>
             </div>

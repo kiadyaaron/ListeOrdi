@@ -11,7 +11,7 @@ final class DefaultController extends AbstractController{
     public function index(): Response
     {
         if ($this->getUser()) {
-            return $this->redirectToRoute('app_d_a_index');
+            return $this->redirectToRoute('app_liste_ordi_index');
         } else {
             return $this->redirectToRoute('app_home');
         }
