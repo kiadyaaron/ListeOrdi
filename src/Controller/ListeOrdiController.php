@@ -100,11 +100,6 @@ public function index(Request $request, ListeOrdiRepository $listeOrdiRepository
             $nbJoursRestants = ($dateFinAmort >= $today) ? $interval->days : 0;
 
             $prixAmort = $nbJoursRestants * $coutJournalier;
-
-            $listeOrdi->setNbJourFixe($nbJoursFixe);
-            $listeOrdi->setDateFinAmort($dateFinAmort);
-            $listeOrdi->setNbJoursRestants($nbJoursRestants);
-            $listeOrdi->setPrixAmort($prixAmort);
         }
     }
 }
