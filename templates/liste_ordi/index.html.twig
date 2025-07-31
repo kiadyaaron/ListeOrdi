@@ -4,12 +4,15 @@
 
 {% block body %}
     <h2><center>LISTE DES ORDINATEURS</center></h2>
+    <h3>Nombre d'ordinateurs : {{ nombreOrdi }}</h3>
     <div class="d-flex justify-content-between align-items-center mb-3">
         <a href="{{ path('app_liste_ordi_new') }}" class="btn btn-success">Ajouter un nouvel ordinateur</a>
+        <a href="{{ path('app_liste_ordi_export') }}" class="btn custom-orange">Exporter en Excel</a>
         <form method="get" class="d-flex p-2 border rounded" style="max-width: 400px;" action="{{ path('app_liste_ordi_index') }}">
     <input type="text" name="q" class="form-control me-2 border-0" value="{{ query|default('') }}" placeholder="Rechercher..." />
     <button class="btn btn-primary" type="submit">Rechercher</button>
 </form>
+        
 
     </div>
     <div>
@@ -37,7 +40,7 @@
                 <td>{{ liste_ordi.DaOdoo }}</td>
                 <td>{{ liste_ordi.PrixUnitaire }}</td>
                 <td>{{ liste_ordi.DateFinAmort ? liste_ordi.DateFinAmort|date('d-m-Y') : '' }}</td>
-                <td>{{ liste_ordi.NbJoursRestants }}</td>
+                <td class="{{ liste_ordi.NbJoursRestants  < 0 ? 'bg-warning text-dark' }}">{{ liste_ordi.NbJoursRestants }} </td>
                 <td>{{ liste_ordi.PrixAmort }}</td>
                 <td>{{ liste_ordi.IM }}</td>
                 <td>{{ liste_ordi.Detenteur }}</td>
